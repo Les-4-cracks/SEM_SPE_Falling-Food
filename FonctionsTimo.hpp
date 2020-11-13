@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-void chuteAliments(char alimentsVisibles []);
+void chuteAliments(int alimentsVisibles []);
 
 
 #endif // FONCTIONSTIMO_HPP_INCLUDED
