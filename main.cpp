@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include "FonctionAlice.h"
 #define FENETREHAUTEUR 750
 #define FENETRELARGEUR 1200
+
 
 
 using namespace sf;//teeeeeeeeeeeeest
@@ -104,3 +106,19 @@ int main()
 
     return EXIT_SUCCESS;
 }
+
+
+int alea(int aleaMax)
+{
+    int res;
+    aleaMax = NBALIMENTS;
+
+    return res;
+}
+
+/*int alea (int mini, int maxi)
+{
+    int res;
+    res = rand()%(maxi-mini +1)+mini;
+    return res;
+}*/
