@@ -1,17 +1,18 @@
 #include <SFML/Graphics.hpp>
+#include "FonctionsTimo.hpp"
 #define FENETREHAUTEUR 750
 #define FENETRELARGEUR 1200
 
 
-using namespace sf;//teeeeeeeeeeeeest
+using namespace sf;
 
 void afficheRecettes(char recette[]);
 void afficheAliments(int alimentsVisibles[]);
 void empilerAliment(int assiettes[]);
 void decor();
 void deplacementTube(char alimentsVisibles[]);
-void chuteAliments(char alimentsVisibles []);
-int timer(int temps.secondes);
+
+int timer(int secondes);
 int alea(int aleaMax);
 int recettesValidees(int recette[], int assiette[]);
 
@@ -19,13 +20,13 @@ int recettesValidees(int recette[], int assiette[]);
 typedef struct{
     int x;
     int y;
-} Points;
+} Coord;
 
 int main()
 {
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
 
-    Points p;
+    Coord c;
 
     int alimentsVisibles[3];
     int i;
@@ -35,7 +36,7 @@ int main()
     int assiettes2[10];
     int cheeseburger[6];
     int burger[3];
-    int maxiDeluxeEdition[7] //SI on ajoute les sauces
+    int maxiDeluxeEdition[7]; //SI on ajoute les sauces
     int vege[4];
 
     while (fenetre.isOpen())
@@ -70,15 +71,15 @@ int main()
 
 
         //afficheRecettes(recette[]);
-        for(i=0; i<3; i++)
+        /*for(i=0; i<3; i++)
         {
             alimentsVisibles[i] = alea(aleaMax);
-        }
+        }*/
 
         Texture alimentsImage[5];
         for(i=0; i<5; i++)
         {
-            sprintf(alimentsTexture,"image/aliments/%i.gif",i);
+            sprintf(alimentsTexture,"image/aliments/%i.png",i);
             if (!alimentsImage[i].loadFromFile(alimentsTexture))
                 printf("Probleme de chargement de l'image !\n");
         }
@@ -87,7 +88,7 @@ int main()
         Event event;
         while (fenetre.pollEvent(event))
         {
-            tempsImparti = timer(int secondes);
+            //tempsImparti = timer(secondes);
 
             //action de toucher une assiette
 
