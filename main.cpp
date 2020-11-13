@@ -24,14 +24,14 @@
 using namespace sf;
 
 void afficheRecettes(char recette[]);
-void afficheAliments(int alimentsVisibles[]);
+
 void empilerAliment(int assiettes[]);
 //void decor();
 int deplacementTubeDroit(int posTubeX,Sprite tube);
 void deplacementTubeGauche(int posTubeX);
 void chuteAliments(char alimentsVisibles [] );
 int timer(int seconde);
-int alea(int aleaMax);
+
 int recettesValidees(int recette[], int assiette[]);
 
 
@@ -90,16 +90,6 @@ int main()
     while (fenetre.isOpen())
     {
 
-        Texture texture;//decor
-        if (!texture.loadFromFile("image/exempleDecor.png"))
-            return EXIT_FAILURE;
-        Sprite decor(texture);
-
-        Texture tubeImage;//tube
-        if (!tubeImage.loadFromFile("image/tube.png"))
-            return EXIT_FAILURE;
-        Sprite tube(tubeImage);
-        tube.setPosition(500,0);
 
         Texture aliment0Image;//tomate
         aliment0Image.loadFromFile("image/aliments/0.png");
@@ -205,7 +195,7 @@ int main()
 
 
         }
-         aliment.setPosition(400,400);
+        aliment.setPosition(400,400);
 
         fenetre.clear();
 
