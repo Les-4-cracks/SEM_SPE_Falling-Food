@@ -12,6 +12,7 @@ void decor();
 void deplacementTube(char alimentsVisibles[]);
 void chuteAliments(char alimentsVisibles []);
 int timer(int temps.secondes);
+int timer(int secondes);
 int alea(int aleaMax);
 int recettesValidees(int recette[], int assiette[]);
 
@@ -19,13 +20,13 @@ int recettesValidees(int recette[], int assiette[]);
 typedef struct{
     int x;
     int y;
-} Points;
+} Point;
 
 int main()
 {
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
 
-    Points p;
+    Point p;
 
     int alimentsVisibles[3];
     int i;
@@ -35,7 +36,7 @@ int main()
     int assiettes2[10];
     int cheeseburger[6];
     int burger[3];
-    int maxiDeluxeEdition[7] //SI on ajoute les sauces
+    int maxiDeluxeEdition[7]; //SI on ajoute les sauces
     int vege[4];
 
     while (fenetre.isOpen())
@@ -55,14 +56,10 @@ int main()
         if (!aliment1.loadFromFile("image/fromage.png"))
             return EXIT_FAILURE;
         Sprite aliment1(aliment1Image);
-
-
         Texture aliment2Image;
         if (!aliment2.loadFromFile("image/tomate.png"))
             return EXIT_FAILURE;
         Sprite aliment2(aliment2Image);
-
-
         Texture aliment3Image;
         if (!aliment3.loadFromFile("image/salade.png"))
             return EXIT_FAILURE;
@@ -72,7 +69,7 @@ int main()
         //afficheRecettes(recette[]);
         for(i=0; i<3; i++)
         {
-            alimentsVisibles[i] = alea(aleaMax);
+            //alimentsVisibles[i] = alea(aleaMax);
         }
 
         Texture alimentsImage[5];
@@ -87,7 +84,7 @@ int main()
         Event event;
         while (fenetre.pollEvent(event))
         {
-            tempsImparti = timer(int secondes);
+            //tempsImparti = timer(int secondes);
 
             //action de toucher une assiette
 
