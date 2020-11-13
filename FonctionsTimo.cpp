@@ -21,7 +21,7 @@ void chuteAliments(int alimentsVisibles [], Texture alimentsImage [])
 
     while(point.x<POSITION_Y_ASSIETTE)
     {
-        point.x+=PAS;
+        point.y+=PAS;
         aliment.setPosition(point.x,point.y);
     }
 }
