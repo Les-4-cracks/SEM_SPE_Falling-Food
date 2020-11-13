@@ -16,6 +16,7 @@
 #define TROU_XMIN 72
 #define TROU_XMAX 260
 #define LARGEUR_TUBE 133
+#define HAUTEUR_TUBE 228
 #define PAS 1
 #define NBALIMENTS 5
 
@@ -72,7 +73,6 @@ int main()
     int vege[4];
     int ordreAliment;
     ordreAliment = alea(NBALIMENTS);
-    Sprite aliment;
     int aleaMax;
     aleaMax = NBALIMENTS;
 
@@ -87,44 +87,48 @@ int main()
     Sprite tube(tubeImage);
     tube.setPosition(deco.tube.x,deco.tube.y);
 
+    Texture aliment0Image;//tomate
+    aliment0Image.loadFromFile("image/aliments/0.png");
+
+    Texture aliment1Image;//steak
+    aliment1Image.loadFromFile("image/aliments/1.png");
+    Sprite aliment;
+
+    Texture aliment2Image;//fromage
+    aliment2Image.loadFromFile("image/aliments/2.png");
+
+    Texture aliment3Image;//salade
+    aliment3Image.loadFromFile("image/aliments/3.png");
+
+    Texture aliment4Image;//pain
+    aliment4Image.loadFromFile("image/aliments/4.png");
+
+    switch (ordreAliment)
+    {
+    case 0:
+        aliment.setTexture(aliment0Image);
+        break;
+    case 1:
+        aliment.setTexture(aliment1Image);
+        break;
+    case 2:
+        aliment.setTexture(aliment2Image);
+        break;
+    case 3:
+        aliment.setTexture(aliment3Image);
+        break;
+    case 4:
+        aliment.setTexture(aliment4Image);
+        break;
+    }
+
+    aliment.setPosition(deco.tube.x + 6,HAUTEUR_TUBE - 43);
+
     while (fenetre.isOpen())
     {
 
 
-        Texture aliment0Image;//tomate
-        aliment0Image.loadFromFile("image/aliments/0.png");
 
-        Texture aliment1Image;//steak
-        aliment1Image.loadFromFile("image/aliments/1.png");
-        Sprite aliment;
-
-        Texture aliment2Image;//fromage
-        aliment2Image.loadFromFile("image/aliments/2.png");
-
-        Texture aliment3Image;//salade
-        aliment3Image.loadFromFile("image/aliments/3.png");
-
-        Texture aliment4Image;//pain
-        aliment4Image.loadFromFile("image/aliments/4.png");
-
-        switch (ordreAliment)
-        {
-        case 0:
-            aliment.setTexture(aliment0Image);
-            break;
-        case 1:
-            aliment.setTexture(aliment1Image);
-            break;
-        case 2:
-            aliment.setTexture(aliment2Image);
-            break;
-        case 3:
-            aliment.setTexture(aliment3Image);
-            break;
-        case 4:
-            aliment.setTexture(aliment4Image);
-            break;
-        }
 
         //afficheRecettes(recette[]);
         /*for(i=0; i<3; i++)
@@ -164,6 +168,7 @@ int main()
                     {
                         //tube.setPosition(deplacementTubeDroit(deco.tube.x, tube),0) ;
                         tube.setPosition(ASS2_XMIN+14,0);
+                        aliment.setPosition( ASS2_XMIN+ 20,HAUTEUR_TUBE - 43);
                         /*while(deco.tube.x<ASS2_XMIN )
                         {
                             deco.tube.x = deco.tube.x + PAS;
@@ -183,10 +188,12 @@ int main()
                     if ( assietteGauche)
                     {
                         tube.setPosition(ASS1_XMIN+14,0);
+                        aliment.setPosition(ASS1_XMIN+ 20,HAUTEUR_TUBE - 43);
                     }
                     if ( poubelle)
                     {
                         tube.setPosition(TROU_XMIN+30,0);
+                        aliment.setPosition(TROU_XMIN+36,HAUTEUR_TUBE - 43);
                     }
 
                 }
@@ -195,13 +202,14 @@ int main()
 
 
         }
-        aliment.setPosition(400,400);
+
 
         fenetre.clear();
 
         fenetre.draw(decor);
-        fenetre.draw(tube);
         fenetre.draw(aliment);
+        fenetre.draw(tube);
+
         fenetre.display();
     }
 
