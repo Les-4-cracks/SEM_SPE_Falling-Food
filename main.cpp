@@ -1,5 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "fonctionanais.h"
+#include "FonctionAlice.h"
+
+
 #define FENETREHAUTEUR 750
 #define FENETRELARGEUR 1200
 #define ASS1_XMIN 372
@@ -14,7 +17,7 @@
 #define TROU_XMAX 260
 #define LARGEUR_TUBE 133
 #define PAS 1
-
+#define NBALIMENTS 5
 
 
 
@@ -67,8 +70,11 @@ int main()
     int burger[3];
     int maxiDeluxeEdition[7]; //SI on ajoute les sauces
     int vege[4];
-
-
+    int ordreAliment;
+    ordreAliment = alea(NBALIMENTS);
+    Sprite aliment;
+    int aleaMax;
+    aleaMax = NBALIMENTS;
 
     Texture texture;
     if (!texture.loadFromFile("image/exempleDecor.png"))
@@ -84,38 +90,56 @@ int main()
     while (fenetre.isOpen())
     {
 
-
-
-        /*Texture aliment1Image;
-        if (!aliment1.loadFromFile("image/fromage.png"))
+        Texture texture;//decor
+        if (!texture.loadFromFile("image/exempleDecor.png"))
             return EXIT_FAILURE;
-        Sprite aliment1(aliment1Image);
+        Sprite decor(texture);
 
-
-        Texture aliment2Image;
-        if (!aliment2.loadFromFile("image/tomate.png"))
+        Texture tubeImage;//tube
+        if (!tubeImage.loadFromFile("image/tube.png"))
             return EXIT_FAILURE;
-        Sprite aliment2(aliment2Image);
+        Sprite tube(tubeImage);
+        tube.setPosition(500,0);
 
+        Texture aliment0Image;//tomate
+        aliment0Image.loadFromFile("image/aliments/0.png");
 
-        Texture aliment3Image;
-        if (!aliment3.loadFromFile("image/salade.png"))
-            return EXIT_FAILURE;
-        Sprite aliment3(aliment3Image);*/
+        Texture aliment1Image;//steak
+        aliment1Image.loadFromFile("image/aliments/1.png");
+        Sprite aliment;
 
+        Texture aliment2Image;//fromage
+        aliment2Image.loadFromFile("image/aliments/2.png");
+
+        Texture aliment3Image;//salade
+        aliment3Image.loadFromFile("image/aliments/3.png");
+
+        Texture aliment4Image;//pain
+        aliment4Image.loadFromFile("image/aliments/4.png");
+
+        switch (ordreAliment)
+        {
+        case 0:
+            aliment.setTexture(aliment0Image);
+            break;
+        case 1:
+            aliment.setTexture(aliment1Image);
+            break;
+        case 2:
+            aliment.setTexture(aliment2Image);
+            break;
+        case 3:
+            aliment.setTexture(aliment3Image);
+            break;
+        case 4:
+            aliment.setTexture(aliment4Image);
+            break;
+        }
 
         //afficheRecettes(recette[]);
         /*for(i=0; i<3; i++)
         {
             alimentsVisibles[i] = alea(aleaMax);
-        }*/
-
-        /*Texture alimentsImage[5];
-        for(i=0; i<5; i++)
-        {
-            sprintf(alimentsTexture,"image/aliments/%i.gif",i);
-            if (!alimentsImage[i].loadFromFile(alimentsTexture))
-                printf("Probleme de chargement de l'image !\n");
         }*/
 
 
@@ -181,13 +205,13 @@ int main()
 
 
         }
-
+         aliment.setPosition(400,400);
 
         fenetre.clear();
 
         fenetre.draw(decor);
         fenetre.draw(tube);
-
+        fenetre.draw(aliment);
         fenetre.display();
     }
 
