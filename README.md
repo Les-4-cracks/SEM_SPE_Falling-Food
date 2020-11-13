@@ -2,7 +2,6 @@
 
 ligne ajoutée
 
-
 Coordonnées : 
 
 Assiette 1 :
@@ -13,6 +12,6 @@ Assiette 2:
 x: 641 - 805
 y: 611 - 659
 
-ligne ajoutée
-oui
-non
+Trou:
+607 - 662
+72 - 260 
