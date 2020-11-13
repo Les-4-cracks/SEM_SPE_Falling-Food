@@ -3,7 +3,7 @@
 #define FENETRELARGEUR 1200
 
 
-using namespace sf;
+using namespace sf;//teeeeeeeeeeeeest
 
 void afficheRecettes(char recette[]);
 void afficheAliments(int alimentsVisibles[]);
