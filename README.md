@@ -1,8 +1,5 @@
 # SEM_SPE_Falling-Food
 
-ligne ajoutée
-
-
 Coordonnées : 
 
 Assiette 1 :
@@ -12,7 +9,3 @@ y: 611 - 659
 Assiette 2:
 x: 641 - 805
 y: 611 - 659
-
-ligne ajoutée
-oui
-non
