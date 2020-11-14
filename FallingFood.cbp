@@ -41,7 +41,7 @@
 		<Compiler>
 			<Add option="-DSFML_STATIC" />
 			<Add option="-Wall" />
-			<Add directory="D:/CodeBlocks/SFML-2.5.1/include" />
+			<Add directory="C:/Program Files (x86)/CodeBlocks/SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
@@ -49,9 +49,14 @@
 			<Add library="gdi32" />
 			<Add library="winmm" />
 			<Add library="dxguid" />
-			<Add directory="D:/CodeBlocks/SFML-2.5.1/lib" />
+			<Add directory="C:/Program Files (x86)/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="FonctionAlice.cpp" />
+		<Unit filename="FonctionAlice.h" />
 		<Unit filename="cb.bmp" />
+		<Unit filename="fonctionAnais.cpp" />
+		<Unit filename="fonctionanais (2).h" />
+		<Unit filename="fonctionanais.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
