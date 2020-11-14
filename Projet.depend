@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1605358394 source:c:\users\timo\documents\semainesfml\main.cpp
+1605360190 source:c:\users\timo\documents\semainesfml\main.cpp
 	<SFML/Graphics.hpp>
 	"fonctionanais.h"
 	"FonctionAlice.h"
 	"FonctionsTimo.hpp"
+	<windows.h>
 
 1525812018 c:\program files (x86)\codeblocks\sfml-2.5.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>

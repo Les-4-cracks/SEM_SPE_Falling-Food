@@ -2,7 +2,7 @@
 #include "fonctionanais.h"
 #include "FonctionAlice.h"
 #include "FonctionsTimo.hpp"
-
+#include <windows.h>
 
 #define FENETREHAUTEUR 750
 #define FENETRELARGEUR 1200
@@ -18,7 +18,7 @@
 #define TROU_XMAX 260
 #define LARGEUR_TUBE 133
 #define HAUTEUR_TUBE 228
-#define PAS 1
+#define PAS 20
 #define NBALIMENTS 5
 
 
@@ -55,7 +55,9 @@ typedef struct
 
 int main()
 {
+
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
+    //fenetre.setFramerateLimit(0);
     int test=0;
     Point p;
     Deco deco;
@@ -73,9 +75,14 @@ int main()
     int maxiDeluxeEdition[7]; //SI on ajoute les sauces
     int vege[4];
     int ordreAliment;
-    ordreAliment = alea(NBALIMENTS);
+    srand(time(NULL));
+    int mvt = 0;
+    int position;
     int aleaMax;
     aleaMax = NBALIMENTS;
+
+
+
 
     Texture texture;
     if (!texture.loadFromFile("image/exempleDecor.png"))
@@ -104,6 +111,7 @@ int main()
     Texture aliment4Image;//pain
     aliment4Image.loadFromFile("image/aliments/4.png");
 
+    ordreAliment = alea(NBALIMENTS);
     switch (ordreAliment)
     {
     case 0:
@@ -123,38 +131,29 @@ int main()
         break;
     }
 
+
+
+
     aliment.setPosition(deco.tube.x + 6,HAUTEUR_TUBE - 43);
 
     while (fenetre.isOpen())
     {
-
-
         //afficheRecettes(recette[]);
-        /*for(i=0; i<3; i++)
-        {
-            alimentsVisibles[i] = alea(aleaMax);
-        }*/
-
 
         Event event;
         while (fenetre.pollEvent(event))
         {
             //tempsImparti = timer(secondes);
-
             //action de toucher une assiette
-
             if (event.type == Event::Closed)
                 fenetre.close();
 
-
             if  (event.type == Event::MouseMoved)
             {
-
-
                 deco.souris.x = event.mouseMove.x;
                 deco.souris.y = event.mouseMove.y;
-
             }
+
             if (event.type == Event::MouseButtonPressed)
             {
                 if (event.mouseButton.button == Mouse::Left )
@@ -165,41 +164,55 @@ int main()
                     poubelle = (deco.souris.x<=TROU_XMAX && deco.souris.x>= TROU_XMIN && deco.souris.y<=TROU_YMAX && deco.souris.y>=TROU_YMIN);
                     if ( assietteDroite)
                     {
-
-                        tube.setPosition(ASS2_XMIN+14,0);
-                        aliment.setPosition( ASS2_XMIN+ 20,HAUTEUR_TUBE - 43);
-
-
-
+                        position = 3;
+                        mvt = 1;
                     }
-                    if ( assietteGauche)
+                    if (assietteGauche)
                     {
-                        tube.setPosition(ASS1_XMIN+14,0);
-                        aliment.setPosition(ASS1_XMIN+ 20,HAUTEUR_TUBE - 43);
+                        position = 2;
+                        if(deco.tube.x<ASS1_XMIN )
+                        {
+                            mvt = 1;
+                        }
+                        if(deco.tube.x+LARGEUR_TUBE>ASS1_XMAX)
+                        {
+                            mvt = -1;
+                        }
                     }
                     if ( poubelle)
                     {
-                        tube.setPosition(TROU_XMIN+30,0);
-                        aliment.setPosition(TROU_XMIN+36,HAUTEUR_TUBE - 43);
+                        position = 1;
+                        mvt = -1;
                     }
-
                 }
             }
-
-
-
+        }
+        if(deco.tube.x+LARGEUR_TUBE>ASS2_XMAX )
+        {
+            mvt = 0;
+            deco.tube.x = ASS2_XMIN+14;
+        }
+        if(deco.tube.x<TROU_XMIN+26)
+        {
+            mvt = 0;
+            deco.tube.x = TROU_XMIN+30;
+        }
+        if(position == 2 && deco.tube.x>ASS1_XMIN && deco.tube.x+LARGEUR_TUBE<ASS1_XMAX)
+        {
+            mvt = 0;
+            deco.tube.x = ASS1_XMIN+14;
         }
 
-
+        deco.tube.x = deco.tube.x + PAS * mvt;
         fenetre.clear();
-
+        aliment.setPosition( deco.tube.x + 6,HAUTEUR_TUBE - 43);
+        tube.setPosition(deco.tube.x,0);
         fenetre.draw(decor);
         fenetre.draw(aliment);
         fenetre.draw(tube);
-
+        sleep( milliseconds(25));
         fenetre.display();
     }
 
     return EXIT_SUCCESS;
 }
-
