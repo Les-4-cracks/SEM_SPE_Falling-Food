@@ -57,6 +57,7 @@ int main()
 {
 
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
+    menu(fenetre);
     //fenetre.setFramerateLimit(0);
     int test=0;
     Point p;

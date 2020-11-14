@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-void chuteAliments(Sprite aliment, int positionX);
+void menu(RenderWindow &fenetre);
 
 
 #endif // FONCTIONSTIMO_HPP_INCLUDED
