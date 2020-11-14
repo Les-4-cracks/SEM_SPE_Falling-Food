@@ -1,6 +1,8 @@
 # depslib dependency file v1.0
-1605258505 source:c:\users\timo\documents\semainesfml\main.cpp
+1605358394 source:c:\users\timo\documents\semainesfml\main.cpp
 	<SFML/Graphics.hpp>
+	"fonctionanais.h"
+	"FonctionAlice.h"
 	"FonctionsTimo.hpp"
 
 1525812018 c:\program files (x86)\codeblocks\sfml-2.5.1\include\sfml\graphics.hpp
@@ -412,10 +414,23 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1605258081 c:\users\timo\documents\semainesfml\fonctionstimo.hpp
+1605354363 c:\users\timo\documents\semainesfml\fonctionstimo.hpp
 	<SFML/Graphics.hpp>
 
-1605265416 source:c:\users\timo\documents\semainesfml\fonctionstimo.cpp
+1605358838 source:c:\users\timo\documents\semainesfml\fonctionstimo.cpp
 	"FonctionsTimo.hpp"
+	<SFML/Graphics.hpp>
+
+1605286168 c:\users\timo\documents\semainesfml\fonctionanais.h
+
+1605279917 c:\users\timo\documents\semainesfml\fonctionalice.h
+
+1605279917 source:c:\users\timo\documents\semainesfml\fonctionalice.cpp
+	<SFML/Graphics.hpp>
+	"FonctionAlice.h"
+	<time.h>
+
+1605286168 source:c:\users\timo\documents\semainesfml\fonctionanais.cpp
+	"fonctionanais.h"
 	<SFML/Graphics.hpp>
 

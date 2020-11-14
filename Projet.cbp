@@ -51,7 +51,10 @@
 			<Add library="dxguid" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="cb.bmp" />
+		<Unit filename="FonctionsTimo.cpp" />
+		<Unit filename="FonctionsTimo.hpp" />
+		<Unit filename="image/exempleDecor.png" />
+		<Unit filename="image/tube.png" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

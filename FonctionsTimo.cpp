@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #define PAS 5
 #define POSITION_Y_ASSIETTE 611
+#define POSITION_Y_ALIMENT_TUBE 185
 
 using namespace sf;
 
@@ -12,17 +13,14 @@ typedef struct{
 
 Coord point;
 
-void chuteAliments(int alimentsVisibles [], Texture alimentsImage [])
+void chuteAliments(Sprite aliment, int positionX)
 {
-    Sprite aliment;
-    int i;
-    aliment.setTexture(alimentsImage[alimentsVisibles[1]]);
-    aliment.setPosition(point.x,point.y);
-
-    while(point.x<POSITION_Y_ASSIETTE)
+    point.y=POSITION_Y_ALIMENT_TUBE;
+    aliment.setPosition(positionX,point.y);
+    while(point.y<POSITION_Y_ASSIETTE)
     {
         point.y+=PAS;
-        aliment.setPosition(point.x,point.y);
+        aliment.setPosition(positionX,point.y);
     }
 }
 
