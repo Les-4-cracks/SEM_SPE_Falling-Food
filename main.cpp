@@ -25,16 +25,6 @@
 
 using namespace sf;
 
-void afficheRecettes(char recette[]);
-
-void empilerAliment(int assiettes[]);
-//void decor();
-int deplacementTubeDroit(int posTubeX,Sprite tube);
-void deplacementTubeGauche(int posTubeX);
-void chuteAliments(char alimentsVisibles [] );
-int timer(int seconde);
-
-int recettesValidees(int recette[], int assiette[]);
 
 
 typedef struct

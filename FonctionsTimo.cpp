@@ -52,20 +52,29 @@ int recettesValidees(int recette[], int assiette[])
 
 void menu(RenderWindow &fenetre)
 {
+    bool menujouer, menuoptions, menuregles;
     Sprite spfond,spjouer,spoptions,spregles;
-    Texture fondimg,jouerimg,optionsimg,reglesimg;
+    Texture fondimg,jouerimg1,optionsimg1,reglesimg1,jouerimg2,optionsimg2,reglesimg2;
+
     if (!fondimg.loadFromFile("image/menu/menu.png"))
         printf("Echec chargment\n");
-    if (!jouerimg.loadFromFile("image/menu/menuJouer1.png"))
+    if (!jouerimg1.loadFromFile("image/menu/menuJouer1.png"))
         printf("Echec chargment\n");
-    if (!optionsimg.loadFromFile("image/menu/menuOptions1.png"))
+    if (!optionsimg1.loadFromFile("image/menu/menuOptions1.png"))
         printf("Echec chargment\n");
-    if (!reglesimg.loadFromFile("image/menu/menuRègles1.png"))
+    if (!reglesimg1.loadFromFile("image/menu/menuRègles1.png"))
         printf("Echec chargment\n");
+    if (!jouerimg2.loadFromFile("image/menu/menuJouer2.png"))
+        printf("Echec chargment\n");
+    if (!optionsimg2.loadFromFile("image/menu/menuOptions2.png"))
+        printf("Echec chargment\n");
+    if (!reglesimg2.loadFromFile("image/menu/menuRègles2.png"))
+        printf("Echec chargment\n");
+
     spfond.setTexture(fondimg);
-    spjouer.setTexture(jouerimg);
-    spoptions.setTexture(optionsimg);
-    spregles.setTexture(reglesimg);
+    spjouer.setTexture(jouerimg1);
+    spoptions.setTexture(optionsimg1);
+    spregles.setTexture(reglesimg1);
 
 
     int jouer=0;
@@ -84,6 +93,23 @@ void menu(RenderWindow &fenetre)
                 {
                     deco.souris.x=event.mouseMove.x;
                     deco.souris.y=event.mouseMove.y;
+                    menujouer = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_JOUER_Y_MAX && deco.souris.y>=BOUTON_JOUER_Y_MIN);
+                    menuoptions = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_OPTIONS_Y_MAX && deco.souris.y>=BOUTON_OPTIONS_Y_MIN);
+                    menuregles = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_REGLES_Y_MAX && deco.souris.y>=BOUTON_REGLES_Y_MIN);
+
+                    if(menujouer)
+                        spjouer.setTexture(jouerimg2);
+                    else
+                        spjouer.setTexture(jouerimg1);
+                    if(menuoptions)
+                        spoptions.setTexture(optionsimg2);
+                    else
+                        spoptions.setTexture(optionsimg1);
+                    if(menuregles)
+                        spregles.setTexture(reglesimg2);
+                    else
+                        spregles.setTexture(reglesimg1);
+
 
                 }
 
@@ -92,10 +118,8 @@ void menu(RenderWindow &fenetre)
                         if (event.mouseButton.button == Mouse::Left )
                         {
 
-                            bool menujouer, menuoptions, menuregles;
-                            menujouer = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_JOUER_Y_MAX && deco.souris.y>=BOUTON_JOUER_Y_MIN);
-                            menuoptions = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_OPTIONS_Y_MAX && deco.souris.y>=BOUTON_OPTIONS_Y_MIN);
-                            menuregles = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_REGLES_Y_MAX && deco.souris.y>=BOUTON_REGLES_Y_MIN);
+
+
                             if (menujouer)
                             {
                                 jouer=1;
