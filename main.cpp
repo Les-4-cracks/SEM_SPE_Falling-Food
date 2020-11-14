@@ -17,7 +17,7 @@
 #define TROU_XMAX 260
 #define LARGEUR_TUBE 133
 #define HAUTEUR_TUBE 228
-#define PAS 6
+#define PAS 9
 #define NBALIMENTS 5
 
 
@@ -54,6 +54,7 @@ typedef struct
 
 int main()
 {
+    //App.SetFramerateLimit(0);
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
     int test=0;
     Point p;
@@ -219,10 +220,11 @@ int main()
             mvt = 0;
             deco.tube.x = TROU_XMIN+30;
         }
-        if(position == 2 && deco.tube.x>ASS1_XMIN && deco.tube.x+LARGEUR_TUBE<ASS2_XMAX)
+        if(position == 2 && deco.tube.x>ASS1_XMIN && deco.tube.x+LARGEUR_TUBE<ASS1_XMAX)
         {
             mvt = 0;
             deco.tube.x = ASS1_XMIN+14;
+            printf("test\n");
         }
 
 
