@@ -17,7 +17,7 @@
 #define TROU_XMAX 260
 #define LARGEUR_TUBE 133
 #define HAUTEUR_TUBE 228
-#define PAS 9
+#define PAS 20
 #define NBALIMENTS 5
 
 
@@ -54,8 +54,9 @@ typedef struct
 
 int main()
 {
-    //App.SetFramerateLimit(0);
+
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
+    //fenetre.setFramerateLimit(0);
     int test=0;
     Point p;
     Deco deco;
@@ -192,23 +193,15 @@ int main()
                         if(deco.tube.x+LARGEUR_TUBE>ASS1_XMAX)
                         {
                             mvt = -1;
-                            printf("\n  Ass 1\n");
                         }
-
-
                     }
                     if ( poubelle)
                     {
                         position = 1;
                         mvt = -1;
-
                     }
                 }
             }
-
-
-
-
         }
         if(deco.tube.x+LARGEUR_TUBE>ASS2_XMAX )
         {
@@ -227,10 +220,6 @@ int main()
             printf("test\n");
         }
 
-
-
-
-
         printf("%i %i\n",deco.tube.x,mvt);
         deco.tube.x = deco.tube.x + PAS * mvt;
         fenetre.clear();
@@ -239,8 +228,7 @@ int main()
         fenetre.draw(decor);
         fenetre.draw(aliment);
         fenetre.draw(tube);
-        sleep( milliseconds(100));
-
+        sleep( milliseconds(25));
         fenetre.display();
     }
 
