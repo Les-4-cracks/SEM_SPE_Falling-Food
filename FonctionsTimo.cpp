@@ -78,9 +78,9 @@ void menu(RenderWindow &fenetre)
 
 
     int jouer=0;
-    while(jouer==0)
+    while(fenetre.isOpen())
     {
-        while (fenetre.isOpen())
+        while (jouer==0)
         {
             Event event;
             while (fenetre.pollEvent(event))
@@ -110,36 +110,34 @@ void menu(RenderWindow &fenetre)
                     else
                         spregles.setTexture(reglesimg1);
 
-
                 }
 
-                    if (event.type == Event::MouseButtonPressed)
+                if (event.type == Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == Mouse::Left )
                     {
-                        if (event.mouseButton.button == Mouse::Left )
+
+
+
+                        if (menujouer)
                         {
-
-
-
-                            if (menujouer)
-                            {
-                                jouer=1;
-                                printf("jouer");
-                            }
-                            if (menuoptions)
-                            {
-                                jouer=2;
-                                printf("options");
-                            }
-                            if (menuregles)
-                            {
-                                jouer=3;
-                                printf("regles");
-                            }
-
-
+                            jouer=1;
                         }
+                        if (menuoptions)
+                        {
+                            options(fenetre);
+                            printf("options");
+                        }
+                        if (menuregles)
+                        {
+                            jouer=3;
+                            printf("regles");
+                        }
+
+
                     }
                 }
+            }
 
 
             fenetre.clear();
@@ -150,6 +148,76 @@ void menu(RenderWindow &fenetre)
             fenetre.display();
 
         }
+    break;
+    }
+
+
+}
+
+
+void options(RenderWindow &fenetre)
+{
+    bool boutonretour;
+    Sprite spfond,spretour;
+    Texture fondimg,retourimg1,retourimg2;
+
+    if (!fondimg.loadFromFile("image/menu/menu.png"))
+        printf("Echec chargment\n");
+    if (!retourimg1.loadFromFile("image/menu/retour1.png"))
+        printf("Echec chargment\n");
+    if (!retourimg2.loadFromFile("image/menu/retour2.png"))
+        printf("Echec chargment\n");
+
+    spfond.setTexture(fondimg);
+    spretour.setTexture(retourimg1);
+
+    while(fenetre.isOpen())
+    {
+
+            Event event;
+            while (fenetre.pollEvent(event))
+            {
+
+                if (event.type == Event::Closed)
+                    fenetre.close();
+
+                if  (event.type == Event::MouseMoved)
+                {
+                    deco.souris.x=event.mouseMove.x;
+                    deco.souris.y=event.mouseMove.y;
+                    boutonretour = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_JOUER_Y_MAX && deco.souris.y>=BOUTON_JOUER_Y_MIN);
+
+                    if(boutonretour)
+                        spretour.setTexture(retourimg2);
+                    else
+                        spretour.setTexture(retourimg1);
+
+                }
+
+                if (event.type == Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == Mouse::Left )
+                    {
+
+
+
+                        if (boutonretour)
+                        {
+                            menu(fenetre);
+                        }
+
+
+                    }
+                }
+            }
+
+
+            fenetre.clear();
+            fenetre.draw(spfond);
+            fenetre.draw(spretour);
+            fenetre.display();
+
+
     }
 
 
