@@ -1,19 +1,23 @@
 #include "FonctionsTimo.hpp"
 #include <SFML/Graphics.hpp>
 
+/* BOUTONS DU MENU PRINCIPAL */
 #define BOUTON_X_MIN 95
 #define BOUTON_X_MAX 309
 #define BOUTON_JOUER_Y_MIN 290
 #define BOUTON_JOUER_Y_MAX 385
 
-
 #define BOUTON_OPTIONS_Y_MIN 422
 #define BOUTON_OPTIONS_Y_MAX 498
-
 
 #define BOUTON_REGLES_Y_MIN 558
 #define BOUTON_REGLES_Y_MAX 633
 
+/* BOUTON RETOUR */
+#define BOUTON_RETOUR_X_MIN 25
+#define BOUTON_RETOUR_X_MAX 210
+#define BOUTON_RETOUR_Y_MIN 662
+#define BOUTON_RETOUR_Y_MAX 717
 
 
 typedef struct
@@ -161,7 +165,7 @@ void options(RenderWindow &fenetre)
     Sprite spfond,spretour;
     Texture fondimg,retourimg1,retourimg2;
 
-    if (!fondimg.loadFromFile("image/menu/menu.png"))
+    if (!fondimg.loadFromFile("image/menu/options.png"))
         printf("Echec chargment\n");
     if (!retourimg1.loadFromFile("image/menu/retour1.png"))
         printf("Echec chargment\n");
@@ -185,7 +189,7 @@ void options(RenderWindow &fenetre)
                 {
                     deco.souris.x=event.mouseMove.x;
                     deco.souris.y=event.mouseMove.y;
-                    boutonretour = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_JOUER_Y_MAX && deco.souris.y>=BOUTON_JOUER_Y_MIN);
+                    boutonretour = (deco.souris.x<=BOUTON_RETOUR_X_MAX && deco.souris.x>=BOUTON_RETOUR_X_MIN && deco.souris.y<=BOUTON_RETOUR_Y_MAX && deco.souris.y>=BOUTON_RETOUR_Y_MIN);
 
                     if(boutonretour)
                         spretour.setTexture(retourimg2);

@@ -4,6 +4,7 @@
 using namespace sf;
 
 void menu(RenderWindow &fenetre);
+void options(RenderWindow &fenetre);
 
 
 #endif // FONCTIONSTIMO_HPP_INCLUDED
