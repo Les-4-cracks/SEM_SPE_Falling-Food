@@ -1,12 +1,19 @@
 #include "FonctionsTimo.hpp"
 #include <SFML/Graphics.hpp>
-#define PAS 5
-#define POSITION_Y_ASSIETTE 611
-#define POSITION_Y_ALIMENT_TUBE 185
-#define BOUTON_JOUER_X_MIN 95
-#define BOUTON_JOUER_X_MAX 309
+
+#define BOUTON_X_MIN 95
+#define BOUTON_X_MAX 309
 #define BOUTON_JOUER_Y_MIN 290
 #define BOUTON_JOUER_Y_MAX 385
+
+
+#define BOUTON_OPTIONS_Y_MIN 422
+#define BOUTON_OPTIONS_Y_MAX 498
+
+
+#define BOUTON_REGLES_Y_MIN 558
+#define BOUTON_REGLES_Y_MAX 633
+
 
 
 typedef struct
@@ -84,17 +91,26 @@ void menu(RenderWindow &fenetre)
                     {
                         if (event.mouseButton.button == Mouse::Left )
                         {
-                            printf("jouer : %i\n",jouer);
 
                             bool menujouer, menuoptions, menuregles;
-                            menujouer = (deco.souris.x<=BOUTON_JOUER_X_MAX && deco.souris.x>=BOUTON_JOUER_X_MIN && deco.souris.y<=BOUTON_JOUER_Y_MAX && deco.souris.y>=BOUTON_JOUER_Y_MIN);
-                            /*menuoptions = (sourisX<=ASS2_XMAX && sourisx>= ASS2_XMIN && sourisy<=ASS_YMAX && sourisy>=ASS_YMIN);
-                            menuregles = (sourisX<=ASS2_XMAX && sourisx>= ASS2_XMIN && sourisy<=ASS_YMAX && sourisy>=ASS_YMIN);*/
+                            menujouer = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_JOUER_Y_MAX && deco.souris.y>=BOUTON_JOUER_Y_MIN);
+                            menuoptions = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_OPTIONS_Y_MAX && deco.souris.y>=BOUTON_OPTIONS_Y_MIN);
+                            menuregles = (deco.souris.x<=BOUTON_X_MAX && deco.souris.x>=BOUTON_X_MIN && deco.souris.y<=BOUTON_REGLES_Y_MAX && deco.souris.y>=BOUTON_REGLES_Y_MIN);
                             if (menujouer)
                             {
                                 jouer=1;
+                                printf("jouer");
                             }
-
+                            if (menuoptions)
+                            {
+                                jouer=2;
+                                printf("options");
+                            }
+                            if (menuregles)
+                            {
+                                jouer=3;
+                                printf("regles");
+                            }
 
 
                         }
