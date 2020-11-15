@@ -50,6 +50,10 @@ typedef struct
     Point poubelle;
     Point recette;
     Point souris;
+    Point recette1;
+    Point recette2;
+    Point cadre;
+
 } Deco;
 
 
@@ -82,6 +86,13 @@ int main()
     int position = 1;
     int aleaMax;
     aleaMax = NBALIMENTS;
+    deco.recette2.x = 1050; //pos recette1
+    deco.recette2.y = 50; //pos recette1
+    deco.cadre.x = 121;  //taille cadre
+    deco.cadre.y = 129;  //taille cadre
+
+    deco.recette1.x = 900; //pos recette2
+    deco.recette1.y = 50; //pos recette2
 
     bool deplacementAliment = false;
     bool afficheAlimentTube = true;
@@ -127,6 +138,29 @@ int main()
 
     Texture vide;
     vide.loadFromFile("image/aliments/vide.png");
+
+    Texture recette1Image;//recette1
+    if (!recette1Image.loadFromFile("image/menu1.png"))
+        return EXIT_FAILURE;
+    Sprite recette1(recette1Image);
+    recette1.setPosition(deco.recette1.x,deco.recette1.y);
+
+    Texture recette2Image;//recette2
+    if (!recette2Image.loadFromFile("image/menu1.png"))
+        return EXIT_FAILURE;
+    Sprite recette2(recette2Image);
+    recette2.setPosition(deco.recette2.x,deco.recette2.y);
+
+
+
+    RectangleShape cadre1(Vector2f(deco.cadre.x+10,deco.cadre.y+10 ));
+    cadre1.setFillColor(Color::Black);
+    cadre1.setPosition(deco.recette1.x-5, deco.recette1.y-5);
+
+
+    RectangleShape cadre2(Vector2f(deco.cadre.x+10,deco.cadre.y+10 ));
+    cadre2.setFillColor(Color::Black);
+    cadre2.setPosition(deco.recette2.x-5, deco.recette2.y-5);
 
 
     /*for(i=0; i<10; i++)
@@ -325,6 +359,11 @@ int main()
                 //printf("i: %i, j: %i, x: %f, y: %f\n", i, j, alimentsAssiette[i][j].getPosition().x, alimentsAssiette[i][j].getPosition().y);
             }
         }
+        fenetre.draw(tube);
+        fenetre.draw(cadre1);
+        fenetre.draw(recette1);
+        fenetre.draw(cadre2);
+        fenetre.draw(recette2);
         fenetre.draw(tube);
         sleep( milliseconds(25));
         fenetre.display();
