@@ -59,6 +59,8 @@
 		</Linker>
 		<Unit filename="FonctionAlice.cpp" />
 		<Unit filename="FonctionAlice.h" />
+		<Unit filename="FonctionsTimo.cpp" />
+		<Unit filename="FonctionsTimo.hpp" />
 		<Unit filename="cb.bmp" />
 		<Unit filename="fonctionAnais.cpp" />
 		<Unit filename="fonctionanais (2).h" />
