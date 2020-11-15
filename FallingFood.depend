@@ -411,7 +411,7 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1605360256 source:d:\documents\sem-spe\sem_spe_falling-food\main.cpp
+1605371234 source:d:\documents\sem-spe\sem_spe_falling-food\main.cpp
 	<SFML/Graphics.hpp>
 	"fonctionanais.h"
 	"FonctionAlice.h"
@@ -826,9 +826,10 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1605270842 d:\documents\sem-spe\sem_spe_falling-food\fonctionanais.h
+1605369446 d:\documents\sem-spe\sem_spe_falling-food\fonctionanais.h
+	<SFML/Graphics.hpp>
 
-1605277875 source:d:\documents\sem-spe\sem_spe_falling-food\fonctionanais.cpp
+1605371155 source:d:\documents\sem-spe\sem_spe_falling-food\fonctionanais.cpp
 	"fonctionanais.h"
 	<SFML/Graphics.hpp>
 

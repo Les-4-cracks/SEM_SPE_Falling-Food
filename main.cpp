@@ -28,12 +28,12 @@ void afficheRecettes(char recette[]);
 
 void empilerAliment(int assiettes[]);
 //void decor();
-int deplacementTubeDroit(int posTubeX,Sprite tube);
-void deplacementTubeGauche(int posTubeX);
+
 void chuteAliments(char alimentsVisibles [] );
 int timer(int seconde);
 
 int recettesValidees(int recette[], int assiette[]);
+
 
 
 typedef struct
@@ -44,9 +44,9 @@ typedef struct
 typedef struct
 {
     Point tube;
-    Point assiettes;
-    Point poubelle;
-    Point recette;
+    Point recette1;
+    Point recette2;
+    Point cadre;
     Point souris;
 } Deco;
 
@@ -56,11 +56,11 @@ int main()
 {
 
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
-    //fenetre.setFramerateLimit(0);
+
+    fenetre.setFramerateLimit(0);
     int test=0;
     Point p;
     Deco deco;
-    int posTubeX = deco.tube.x;
     deco.tube.x = 520;
     deco.tube.y = 0;
     int alimentsVisibles[3];
@@ -79,6 +79,15 @@ int main()
     int position;
     int aleaMax;
     aleaMax = NBALIMENTS;
+    deco.recette2.x = 1050; //pos recette1
+    deco.recette2.y = 50; //pos recette1
+    deco.cadre.x = 121;  //taille cadre
+    deco.cadre.y = 129;  //taille cadre
+
+    deco.recette1.x = 900; //pos recette2
+    deco.recette1.y = 50; //pos recette2
+    //int posTubeX = deco.tube.x;
+    //int posTubeY = deco.tube.y;
 
 
 
@@ -109,7 +118,29 @@ int main()
 
     Texture aliment4Image;//pain
     aliment4Image.loadFromFile("image/aliments/4.png");
-    printf("%i",ordreAliment);
+
+    Texture recette1Image;//recette1
+    if (!recette1Image.loadFromFile("image/menu1.png"))
+        return EXIT_FAILURE;
+    Sprite recette1(recette1Image);
+    recette1.setPosition(deco.recette1.x,deco.recette1.y);
+
+    Texture recette2Image;//recette2
+    if (!recette2Image.loadFromFile("image/menu1.png"))
+        return EXIT_FAILURE;
+    Sprite recette2(recette2Image);
+    recette2.setPosition(deco.recette2.x,deco.recette2.y);
+
+
+
+    RectangleShape cadre1(Vector2f(deco.cadre.x+10,deco.cadre.y+10 ));
+    cadre1.setFillColor(Color::Black);
+    cadre1.setPosition(deco.recette1.x-5, deco.recette1.y-5);
+
+
+    RectangleShape cadre2(Vector2f(deco.cadre.x+10,deco.cadre.y+10 ));
+    cadre2.setFillColor(Color::Black);
+    cadre2.setPosition(deco.recette2.x-5, deco.recette2.y-5);
 
     ordreAliment = alea(NBALIMENTS);
     switch (ordreAliment)
@@ -151,11 +182,7 @@ int main()
 
     while (fenetre.isOpen())
     {
-        //afficheRecettes(recette[]);
-        /*for(i=0; i<3; i++)
-        {
-            alimentsVisibles[i] = alea(aleaMax);
-        }*/
+        //affTube(fenetre, position, mvt, posTubeX);
         Event event;
         while (fenetre.pollEvent(event))
         {
@@ -202,7 +229,10 @@ int main()
                     }
                 }
             }
+
         }
+        //deco.tube.x=posTubeX;
+        //deco.tube.y= posTubeY;
         if(deco.tube.x+LARGEUR_TUBE>ASS2_XMAX )
         {
             mvt = 0;
@@ -217,16 +247,19 @@ int main()
         {
             mvt = 0;
             deco.tube.x = ASS1_XMIN+14;
-            printf("test\n");
         }
 
-        printf("%i %i\n",deco.tube.x,mvt);
+
         deco.tube.x = deco.tube.x + PAS * mvt;
         fenetre.clear();
         aliment.setPosition( deco.tube.x + 6,HAUTEUR_TUBE - 43);
         tube.setPosition(deco.tube.x,0);
         fenetre.draw(decor);
         fenetre.draw(aliment);
+        fenetre.draw(cadre1);
+        fenetre.draw(recette1);
+        fenetre.draw(cadre2);
+        fenetre.draw(recette2);
         fenetre.draw(tube);
         sleep( milliseconds(25));
         fenetre.display();
