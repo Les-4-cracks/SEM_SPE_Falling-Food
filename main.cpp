@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "fonctionanais.h"
 #include "FonctionAlice.h"
+#include "FonctionsTimo.hpp"
 #include <windows.h>
 
 #define FENETREHAUTEUR 750
@@ -63,6 +64,7 @@ int main()
 
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
     //fenetre.setFramerateLimit(0);
+    menu(fenetre);
     int test=0;
     Point p;
     Deco deco;
