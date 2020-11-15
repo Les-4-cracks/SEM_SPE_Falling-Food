@@ -19,6 +19,7 @@
 #define HAUTEUR_TUBE 228
 #define PAS 20
 #define NBALIMENTS 5
+#define TAILLE_EMPILEMENT 20
 
 
 
@@ -44,6 +45,7 @@ typedef struct
 typedef struct
 {
     Point tube;
+    Point aliment;
     Point assiettes;
     Point poubelle;
     Point recette;
@@ -73,13 +75,23 @@ int main()
     int burger[3];
     int maxiDeluxeEdition[7]; //SI on ajoute les sauces
     int vege[4];
-    int ordreAliment;
+    int ordreAliment = 0;
     srand(time(NULL));
     int mvt = 0;
-    int position;
+    int mvtY = 0;
+    int position = 1;
     int aleaMax;
     aleaMax = NBALIMENTS;
 
+    bool deplacementAliment = false;
+    bool afficheAlimentTube = true;
+    bool genererAliment = true;
+
+    for(i=0; i<10; i++)     // Initialisation des tableaux pour gérer le pb de l'aliment 0
+    {
+        assiettes1[i]=-1;
+        assiettes2[i]=-1;
+    }
 
 
 
@@ -99,7 +111,9 @@ int main()
 
     Texture aliment1Image;//steak
     aliment1Image.loadFromFile("image/aliments/1.png");
-    Sprite aliment;
+    Sprite alimentTube;
+    Sprite alimentsAssiette[3][10] ;
+    int indiceAliment = 0;
 
     Texture aliment2Image;//fromage
     aliment2Image.loadFromFile("image/aliments/2.png");
@@ -111,27 +125,8 @@ int main()
     aliment4Image.loadFromFile("image/aliments/4.png");
     printf("%i",ordreAliment);
 
-    ordreAliment = alea(NBALIMENTS);
-    switch (ordreAliment)
-    {
-    case 0:
-        aliment.setTexture(aliment0Image);
-        break;
-    case 1:
-        aliment.setTexture(aliment1Image);
-        break;
-    case 2:
-        aliment.setTexture(aliment2Image);
-        break;
-    case 3:
-        aliment.setTexture(aliment3Image);
-        break;
-    case 4:
-        aliment.setTexture(aliment4Image);
-        break;
-    }
-
-
+    Texture vide;
+    vide.loadFromFile("image/aliments/vide.png");
 
 
     /*for(i=0; i<10; i++)
@@ -147,10 +142,38 @@ int main()
 
 
 
-    aliment.setPosition(deco.tube.x + 6,HAUTEUR_TUBE - 43);
+    alimentTube.setPosition(deco.tube.x + 12,HAUTEUR_TUBE - 43);
 
     while (fenetre.isOpen())
     {
+        if (genererAliment)
+        {
+            ordreAliment = alea(NBALIMENTS);
+
+            switch (ordreAliment)
+            {
+            case 0:
+                alimentTube.setTexture(aliment0Image);
+                break;
+            case 1:
+                alimentTube.setTexture(aliment1Image);
+                break;
+            case 2:
+                alimentTube.setTexture(aliment2Image);
+                break;
+            case 3:
+                alimentTube.setTexture(aliment3Image);
+                break;
+            case 4:
+                alimentTube.setTexture(aliment4Image);
+                break;
+            }
+            genererAliment = false;
+            afficheAlimentTube = true;
+            deco.aliment.y = HAUTEUR_TUBE - 43;
+
+        }
+
         //afficheRecettes(recette[]);
         /*for(i=0; i<3; i++)
         {
@@ -172,7 +195,7 @@ int main()
 
             if (event.type == Event::MouseButtonPressed)
             {
-                if (event.mouseButton.button == Mouse::Left )
+                if (event.mouseButton.button == Mouse::Left &&deplacementAliment == false)
                 {
                     bool assietteDroite, assietteGauche, poubelle;
                     assietteDroite = (deco.souris.x<=ASS2_XMAX && deco.souris.x>= ASS2_XMIN && deco.souris.y<=ASS_YMAX && deco.souris.y>=ASS_YMIN);
@@ -199,6 +222,52 @@ int main()
                     {
                         position = 1;
                         mvt = -1;
+                        indiceAliment = 0; // On force la position à 0 pour la poubelle, car on ne garde aucun aliment
+                    }
+                    if (assietteDroite || assietteGauche || poubelle)
+                    {
+                        deplacementAliment = true;
+                        afficheAlimentTube = false;
+                        for (i=0; i < 10; i++)
+                        {
+                            if (position == 2)
+                                if (assiettes1[i] == -1)
+                                {
+                                    assiettes1[i] = ordreAliment;
+                                    indiceAliment = i;
+
+                                    break;
+                                }
+                            if (position == 3)
+                            {
+                                if (assiettes2[i] == -1)
+                                {
+                                    assiettes2[i] = ordreAliment;
+                                    indiceAliment = i;
+                                    break;
+                                }
+                            }
+                        }
+
+                        switch (ordreAliment)
+                        {
+                        case 0:
+                            alimentsAssiette[position-1][indiceAliment].setTexture(aliment0Image);
+                            break;
+                        case 1:
+                            alimentsAssiette[position-1][indiceAliment].setTexture(aliment1Image);
+                            break;
+                        case 2:
+                            alimentsAssiette[position-1][indiceAliment].setTexture(aliment2Image);
+                            break;
+                        case 3:
+                            alimentsAssiette[position-1][indiceAliment].setTexture(aliment3Image);
+                            break;
+                        case 4:
+                            alimentsAssiette[position-1][indiceAliment].setTexture(aliment4Image);
+                            break;
+                        }
+                        alimentsAssiette[position-1][indiceAliment].setPosition(deco.tube.x + 12, HAUTEUR_TUBE - 43);
                     }
                 }
             }
@@ -217,19 +286,49 @@ int main()
         {
             mvt = 0;
             deco.tube.x = ASS1_XMIN+14;
-            printf("test\n");
+        }
+        if(mvt == 0 && deplacementAliment == true)
+        {
+            mvtY = 1;
+            if (alimentsAssiette[position-1][indiceAliment].getPosition().y > 600 - indiceAliment * TAILLE_EMPILEMENT)
+            {
+                mvtY = 0;
+                deplacementAliment = false;
+                afficheAlimentTube = true;
+                genererAliment = true;
+                if(position == 1)
+                {
+                    alimentsAssiette[position-1][indiceAliment].setTexture(vide);
+
+                }
+            }
         }
 
-        printf("%i %i\n",deco.tube.x,mvt);
+
+        //   printf("%i %i\n",deco.tube.x,mvt);
         deco.tube.x = deco.tube.x + PAS * mvt;
         fenetre.clear();
-        aliment.setPosition( deco.tube.x + 12,HAUTEUR_TUBE - 43);
+
+        alimentsAssiette[position-1][indiceAliment].setPosition( deco.tube.x + 12, alimentsAssiette[position - 1][indiceAliment].getPosition().y + PAS * mvtY);
         tube.setPosition(deco.tube.x,0);
         fenetre.draw(decor);
-        fenetre.draw(aliment);
+        if (afficheAlimentTube)
+        {
+            alimentTube.setPosition(deco.tube.x+12,deco.aliment.y);
+            fenetre.draw(alimentTube);
+        }
+        for (i=0; i <3; i++)
+        {
+            for (int j=0; j < 10; j++)
+            {
+                fenetre.draw(alimentsAssiette[i][j]);
+                //printf("i: %i, j: %i, x: %f, y: %f\n", i, j, alimentsAssiette[i][j].getPosition().x, alimentsAssiette[i][j].getPosition().y);
+            }
+        }
         fenetre.draw(tube);
         sleep( milliseconds(25));
         fenetre.display();
+        //    printf("indice aliment tombé %i\n", indiceAliment);
     }
 
     return EXIT_SUCCESS;
