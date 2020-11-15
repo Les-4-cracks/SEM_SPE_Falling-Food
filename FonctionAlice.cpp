@@ -6,9 +6,12 @@ using namespace sf;
 
 int alea(int aleaMax)
 {
-    int res;
-    srand(time(NULL));
+    //srand(time(NULL));
+    int res,i;
+
     aleaMax = NBALIMENTS-1;
     res = rand()%(NBALIMENTS);
+
+
     return res;
 }
