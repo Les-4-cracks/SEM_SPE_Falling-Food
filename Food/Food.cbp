@@ -51,6 +51,10 @@
 			<Add library="dxguid" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="FonctionAlice.cpp" />
+		<Unit filename="FonctionAlice.h" />
+		<Unit filename="FonctionAnais.cpp" />
+		<Unit filename="FonctionAnais.h" />
 		<Unit filename="cb.bmp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
