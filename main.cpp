@@ -21,6 +21,7 @@
 #define PAS 20
 #define NBALIMENTS 5
 #define TAILLE_EMPILEMENT 20
+#define TEMPO 25
 
 
 
@@ -87,6 +88,18 @@ int main()
         assiettes2[i]=-1;
     }
 
+    int tempsImparti;
+    int seconde;
+    seconde = 30;
+    int compteur;
+    compteur = 1;
+
+    char chaineTimer[4];
+    Font font; //chargement de la police
+    if (!font.loadFromFile("arial.ttf"))
+        printf("PB de chargement de la police d'ecriture !\n");
+    Text texte;
+    texte.setFont(font);
 
 
     Texture texture;
@@ -163,6 +176,18 @@ int main()
 
     while (fenetre.isOpen())
     {
+        compteur ++;
+        if (compteur ==1000/TEMPO)
+        {
+            printf("seconde :%i\n", seconde);
+            seconde --;
+            compteur =1;
+            printf("compteur: %i\n",compteur);
+            if(seconde <0)
+            {
+                break;
+            }
+        }
         if (genererAliment)
         {
             ordreAliment = alea(NBALIMENTS);
@@ -199,6 +224,12 @@ int main()
         Event event;
         while (fenetre.pollEvent(event))
         {
+            sprintf(chaineTimer, "%i",seconde);
+            texte.setString(chaineTimer);
+            texte.setCharacterSize(50);
+            texte.setColor(Color::Black);
+            texte.setStyle(Text::Bold);
+
             //tempsImparti = timer(secondes);
             //action de toucher une assiette
             if (event.type == Event::Closed)
@@ -348,7 +379,8 @@ int main()
         fenetre.draw(cadre2);
         fenetre.draw(recette2);
         fenetre.draw(tube);
-        sleep( milliseconds(25));
+        fenetre.draw(texte);
+        sleep( milliseconds(TEMPO));
         fenetre.display();
         //    printf("indice aliment tombé %i\n", indiceAliment);
     }
