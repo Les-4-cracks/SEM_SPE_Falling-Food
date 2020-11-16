@@ -83,11 +83,11 @@ int main()
     aleaMax = NBALIMENTS;
     int tempsImparti;
     int seconde;
-    seconde = 5;
+    seconde = 30;
     int compteur;
     compteur = 1;
 
-    char chaineTimer[3];
+    char chaineTimer[4];
     Font font; //chargement de la police
     if (!font.loadFromFile("arial.ttf"))
         printf("PB de chargement de la police d'ecriture !\n");
@@ -184,8 +184,8 @@ int main()
 
             sprintf(chaineTimer, "%i",seconde);
             texte.setString(chaineTimer);
-            texte.setCharacterSize(24);
-            texte.setColor(Color::White);
+            texte.setCharacterSize(50);
+            texte.setColor(Color::Black);
             texte.setStyle(Text::Bold);
 
             //tempsImparti = timer(seconde);
