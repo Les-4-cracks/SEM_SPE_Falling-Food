@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "FonctionAlice.h"
+#include "FonctionsTimo.h"
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,6 +7,7 @@
 #define NBALIMENTS 5
 using namespace sf;
 
+//fonction aléatoire pour les aliments
 int alea(int aleaMax)
 {
     int res;
@@ -14,21 +15,4 @@ int alea(int aleaMax)
     aleaMax = NBALIMENTS-1;
     res = rand()%(NBALIMENTS);
     return res;
-}
-
-int timer(int seconde)
-{
-    seconde = 5;
-    do
-    {
-        printf("temps :%03i\n",seconde);
-        seconde--;
-        Sleep(1000);
-    }while(seconde >0);
-    /*while (seconde >0)
-    {
-        printf("temps :%03i\n",seconde);
-        seconde--;
-        Sleep(1000);
-    }*/
 }

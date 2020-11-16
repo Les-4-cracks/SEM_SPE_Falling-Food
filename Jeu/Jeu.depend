@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
-1605362867 source:c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionalice.cpp
+1605532174 source:c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionalice.cpp
 	<SFML/Graphics.hpp>
-	"FonctionAlice.h"
+	"FonctionsTimo.h"
 	<time.h>
 	<stdio.h>
 	<stdlib.h>
@@ -418,15 +418,23 @@
 
 1605361394 c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionalice.h
 
-1605282553 source:c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionanais.cpp
-	"fonctionanais.h"
+1605532118 source:c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionanais.cpp
+	"FonctionAnais.h"
 	<SFML/Graphics.hpp>
 
-1605282553 c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionanais.h
+1605532123 c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionanais.h
 
-1605518138 source:c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\main.cpp
+1605529625 source:c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\main.cpp
 	<SFML/Graphics.hpp>
-	"fonctionanais.h"
+	"FonctionAnais.h"
 	"FonctionAlice.h"
+	"FonctionsTimo.h"
 	<windows.h>
+
+1605522678 source:c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionstimo.cpp
+	"FonctionsTimo.h"
+	<SFML/Graphics.hpp>
+
+1605532238 c:\users\alice\onedrive\documents\semainespé\sem_spe_falling-food\jeu\fonctionstimo.h
+	<SFML/Graphics.hpp>
 

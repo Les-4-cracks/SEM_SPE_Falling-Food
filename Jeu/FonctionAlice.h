@@ -2,8 +2,7 @@
 #define FONCTIONALICE_H_INCLUDED
 using namespace sf;
 
+//fonction aléatoire aliments
 int alea(int aleaMax);
-int timer(int seconde);
-
 
 #endif // FONCTIONALICE_H_INCLUDED
