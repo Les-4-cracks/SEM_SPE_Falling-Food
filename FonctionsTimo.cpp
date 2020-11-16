@@ -20,26 +20,14 @@
 #define BOUTON_RETOUR_Y_MAX 717
 
 
-typedef struct
-{
-    int x;
-    int y;
-} Point;
-typedef struct
-{
-    Point souris;
-} Deco;
-
-Deco deco;
-
 using namespace sf;
 
+extern Deco deco;
 
-
-int recettesValidees(int recette[], int assiette[])
+int recettesValidees(int recette[], int assiette[], int tailleRecette)
 {
     int i,nbIngredientValide,res;
-    int tailleRecette = sizeof(recette)/sizeof(recette[0]);
+    nbIngredientValide = 0;
 
     for(i=0; i<tailleRecette; i++)
     {

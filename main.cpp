@@ -21,43 +21,25 @@
 #define PAS 20
 #define NBALIMENTS 5
 #define TAILLE_EMPILEMENT 20
-
-
+#define TEMPO 25
+#define BOUTON1_XMIN 434
+#define BOUTON1_XMAX 474
+#define BOUTON2_XMIN 703
+#define BOUTON2_XMAX 743
+#define BOUTON_YMIN 680
+#define BOUTON_YMAX 720
+#define TEMPS 75
 
 using namespace sf;
 
-void afficheRecettes(char recette[]);
-
-void empilerAliment(int assiettes[]);
-//void decor();
-int deplacementTubeDroit(int posTubeX,Sprite tube);
-void deplacementTubeGauche(int posTubeX);
-void chuteAliments(char alimentsVisibles [] );
-int timer(int seconde);
-
-int recettesValidees(int recette[], int assiette[]);
-
-
 typedef struct
 {
-    int x;
-    int y;
-} Point;
-typedef struct
-{
-    Point tube;
-    Point aliment;
-    Point assiettes;
-    Point poubelle;
-    Point recette;
-    Point souris;
-    Point recette1;
-    Point recette2;
-    Point cadre;
-
-} Deco;
+    int recette1;
+    int recette2;
+} Recette;
 
 
+Deco deco;
 
 int main()
 {
@@ -65,10 +47,8 @@ int main()
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
     //fenetre.setFramerateLimit(0);
     menu(fenetre);
-    int test=0;
+    Recette r;
     Point p;
-    Deco deco;
-    int posTubeX = deco.tube.x;
     deco.tube.x = 520;
     deco.tube.y = 0;
     int alimentsVisibles[3];
@@ -77,16 +57,15 @@ int main()
     int coorXtube;
     int assiettes1[10];
     int assiettes2[10];
-    int cheeseburger[6];
-    int burger[3];
-    int maxiDeluxeEdition[7]; //SI on ajoute les sauces
-    int vege[4];
+    int cheeseburger[]={2,1,2,3,4};
+    int burgerClassique[]={1,2,0,3,4};
     int ordreAliment = 0;
     srand(time(NULL));
-    int mvt = 0;
-    int mvtY = 0;
+    int mvtX = 0; //mouvement tube/aliments en x
+    int mvtY = 0; //mouvement aliments en y
     int position = 1;
     int aleaMax;
+    int vider = 0;
     aleaMax = NBALIMENTS;
     deco.recette2.x = 1050; //pos recette1
     deco.recette2.y = 50; //pos recette1
@@ -99,6 +78,7 @@ int main()
     bool deplacementAliment = false;
     bool afficheAlimentTube = true;
     bool genererAliment = true;
+    bool bouton1,bouton2;
 
     for(i=0; i<10; i++)     // Initialisation des tableaux pour gérer le pb de l'aliment 0
     {
@@ -106,6 +86,18 @@ int main()
         assiettes2[i]=-1;
     }
 
+    int tempsImparti;
+    int seconde;
+    seconde = TEMPS;
+    int compteur;
+    compteur = 1;
+
+    char chaineTimer[4];
+    Font font; //chargement de la police
+    if (!font.loadFromFile("arial.ttf"))
+        printf("PB de chargement de la police d'ecriture !\n");
+    Text texte;
+    texte.setFont(font);
 
 
     Texture texture;
@@ -139,7 +131,7 @@ int main()
     printf("%i",ordreAliment);
 
     Texture vide;
-    vide.loadFromFile("image/aliments/vide.png");
+    vide.loadFromFile("image/aliments/-1.png");
 
     Texture recette1Image;//recette1
     if (!recette1Image.loadFromFile("image/menu1.png"))
@@ -155,33 +147,30 @@ int main()
 
 
 
-    RectangleShape cadre1(Vector2f(deco.cadre.x+10,deco.cadre.y+10 ));
+    RectangleShape cadre1(Vector2f(deco.cadre.x+10,deco.cadre.y+10 )); //cadre recette1
     cadre1.setFillColor(Color::Black);
     cadre1.setPosition(deco.recette1.x-5, deco.recette1.y-5);
 
 
-    RectangleShape cadre2(Vector2f(deco.cadre.x+10,deco.cadre.y+10 ));
+    RectangleShape cadre2(Vector2f(deco.cadre.x+10,deco.cadre.y+10 ));  //cadre recette2
     cadre2.setFillColor(Color::Black);
     cadre2.setPosition(deco.recette2.x-5, deco.recette2.y-5);
-
-
-    /*for(i=0; i<10; i++)
-    {
-        ordreAliment = alea(NBALIMENTS);
-
-        tableauSprite[i]=ordreAliment;
-        printf("%d ",tableauSprite[i]);
-    }
-    int all1 = alea(NBALIMENTS);
-    printf("%i",all1);
-    printf("%i",tableauSprite[8]);*/
-
-
 
     alimentTube.setPosition(deco.tube.x + 12,HAUTEUR_TUBE - 43);
 
     while (fenetre.isOpen())
     {
+        compteur ++;
+        if (compteur ==1000/TEMPO)
+        {
+            printf("seconde :%i\n", seconde);
+            seconde --;
+            compteur =1;
+            if(seconde <0)
+            {
+                break;
+            }
+        }
         if (genererAliment)
         {
             ordreAliment = alea(NBALIMENTS);
@@ -209,24 +198,23 @@ int main()
             deco.aliment.y = HAUTEUR_TUBE - 43;
 
         }
+        sprintf(chaineTimer, "%i",seconde);
+        texte.setString(chaineTimer);
+        texte.setCharacterSize(50);
+        texte.setColor(Color::Black);
+        texte.setStyle(Text::Bold);
 
-        //afficheRecettes(recette[]);
-        /*for(i=0; i<3; i++)
-        {
-            alimentsVisibles[i] = alea(aleaMax);
-        }*/
         Event event;
         while (fenetre.pollEvent(event))
         {
-            //tempsImparti = timer(secondes);
-            //action de toucher une assiette
+
             if (event.type == Event::Closed)
                 fenetre.close();
 
             if  (event.type == Event::MouseMoved)
             {
-                deco.souris.x = event.mouseMove.x;
-                deco.souris.y = event.mouseMove.y;
+                deco.souris.x = event.mouseMove.x; //pour position souris en x
+                deco.souris.y = event.mouseMove.y; //pour position souris en y
             }
 
             if (event.type == Event::MouseButtonPressed)
@@ -234,30 +222,42 @@ int main()
                 if (event.mouseButton.button == Mouse::Left &&deplacementAliment == false)
                 {
                     bool assietteDroite, assietteGauche, poubelle;
-                    assietteDroite = (deco.souris.x<=ASS2_XMAX && deco.souris.x>= ASS2_XMIN && deco.souris.y<=ASS_YMAX && deco.souris.y>=ASS_YMIN);
-                    assietteGauche = (deco.souris.x<=ASS1_XMAX && deco.souris.x>= ASS1_XMIN && deco.souris.y<=ASS_YMAX && deco.souris.y>=ASS_YMIN);
-                    poubelle = (deco.souris.x<=TROU_XMAX && deco.souris.x>= TROU_XMIN && deco.souris.y<=TROU_YMAX && deco.souris.y>=TROU_YMIN);
+                    assietteDroite = (deco.souris.x<=ASS2_XMAX && deco.souris.x>= ASS2_XMIN && deco.souris.y<=ASS_YMAX && deco.souris.y>=ASS_YMIN); //si cliquer dans assiette droite
+                    assietteGauche = (deco.souris.x<=ASS1_XMAX && deco.souris.x>= ASS1_XMIN && deco.souris.y<=ASS_YMAX && deco.souris.y>=ASS_YMIN); //si cliquer dans assiette gauche
+                    poubelle = (deco.souris.x<=TROU_XMAX && deco.souris.x>= TROU_XMIN && deco.souris.y<=TROU_YMAX && deco.souris.y>=TROU_YMIN);  //si cliquer dans la poubelle
+                    bouton1 = (deco.souris.x<=BOUTON1_XMAX && deco.souris.x>=BOUTON1_XMIN && deco.souris.y<=BOUTON_YMAX && deco.souris.y>=BOUTON_YMIN);  //si cliquer sur le bouton pour vider assiette gauche
+                    bouton2 = (deco.souris.x<=BOUTON2_XMAX && deco.souris.x>=BOUTON2_XMIN && deco.souris.y<=BOUTON_YMAX && deco.souris.y>=BOUTON_YMIN);  //si cliquer sur le bouton pour vider assiette droite
+                    if (bouton1)
+                    {
+                        printf("B1");
+                        vider = 1;
+                    }
+                    if (bouton2)
+                    {
+                        printf("B2");
+                        vider = 2;
+                    }
                     if ( assietteDroite)
                     {
                         position = 3;
-                        mvt = 1;
+                        mvtX = 1; // avance a droite
                     }
                     if (assietteGauche)
                     {
                         position = 2;
                         if(deco.tube.x<ASS1_XMIN )
                         {
-                            mvt = 1;
+                            mvtX = 1; // avance a droite
                         }
                         if(deco.tube.x+LARGEUR_TUBE>ASS1_XMAX)
                         {
-                            mvt = -1;
+                            mvtX = -1; // avance a gauche
                         }
                     }
                     if ( poubelle)
                     {
                         position = 1;
-                        mvt = -1;
+                        mvtX = -1;  // avance a gauche
                         indiceAliment = 0; // On force la position à 0 pour la poubelle, car on ne garde aucun aliment
                     }
                     if (assietteDroite || assietteGauche || poubelle)
@@ -308,22 +308,22 @@ int main()
                 }
             }
         }
-        if(deco.tube.x+LARGEUR_TUBE>ASS2_XMAX )
+        if(deco.tube.x+LARGEUR_TUBE>ASS2_XMAX ) //tube s'arrete au dessus de l'assiette2
         {
-            mvt = 0;
+            mvtX = 0;
             deco.tube.x = ASS2_XMIN+14;
         }
-        if(deco.tube.x<TROU_XMIN+26)
+        if(deco.tube.x<TROU_XMIN+26) //tube s'arrete au dessus de la pubelle
         {
-            mvt = 0;
+            mvtX = 0;
             deco.tube.x = TROU_XMIN+30;
         }
-        if(position == 2 && deco.tube.x>ASS1_XMIN && deco.tube.x+LARGEUR_TUBE<ASS1_XMAX)
+        if(position == 2 && deco.tube.x>ASS1_XMIN && deco.tube.x+LARGEUR_TUBE<ASS1_XMAX)//tube s'arrete au dessus de l'assiette1
         {
-            mvt = 0;
+            mvtX = 0;
             deco.tube.x = ASS1_XMIN+14;
         }
-        if(mvt == 0 && deplacementAliment == true)
+        if(mvtX == 0 && deplacementAliment == true)
         {
             mvtY = 1;
             if (alimentsAssiette[position-1][indiceAliment].getPosition().y > 600 - indiceAliment * TAILLE_EMPILEMENT)
@@ -340,11 +340,58 @@ int main()
             }
         }
 
+        deco.tube.x = deco.tube.x + PAS * mvtX; // deplacement tube
 
-        //   printf("%i %i\n",deco.tube.x,mvt);
-        deco.tube.x = deco.tube.x + PAS * mvt;
+
+        int tailleburgerClassique = *(&burgerClassique+1)-burgerClassique; //calcule la longueur du tableau "burgerClassique []"
+        int taillecheeseburger = *(&cheeseburger+1)-cheeseburger; //calcule la longueur du tableau "cheeseburger []"
+
+        r.recette1 = recettesValidees(burgerClassique, assiettes1, tailleburgerClassique);
+        r.recette2 = recettesValidees(cheeseburger, assiettes2, taillecheeseburger);
+
+        /*if (r.recette1 == 1)
+            afficher sprite validé sur recette 1
+
+        if (r.recette2 == 1)
+            afficher sprite validé sur recette 2*/
+
+        if (r.recette1 == 1 && r.recette2 == 1)
+            printf("Les deux recettes sont validées\n");
+            //afficher fond victoire
+
+
         fenetre.clear();
+        if (vider == 1)
+        {
+            for (i=0; i<10; i++)
+            {
+                assiettes1[i]=-1;
+            }
 
+
+                for (int j=0; j < 10; j++)
+                {
+                    alimentsAssiette[1][j].setTexture(vide);;
+                    //printf("i: %i, j: %i, x: %f, y: %f\n", i, j, alimentsAssiette[i][j].getPosition().x, alimentsAssiette[i][j].getPosition().y);
+                }
+
+        }
+        if (vider == 2)
+        {
+            for (i=0; i<10; i++)
+            {
+                assiettes2[i]=-1;
+            }
+
+
+                for (int j=0; j < 10; j++)
+                {
+                    alimentsAssiette[2][j].setTexture(vide);;
+                    //printf("i: %i, j: %i, x: %f, y: %f\n", i, j, alimentsAssiette[i][j].getPosition().x, alimentsAssiette[i][j].getPosition().y);
+                }
+
+        }
+        vider = 0;
         alimentsAssiette[position-1][indiceAliment].setPosition( deco.tube.x + 12, alimentsAssiette[position - 1][indiceAliment].getPosition().y + PAS * mvtY);
         tube.setPosition(deco.tube.x,0);
         fenetre.draw(decor);
@@ -367,11 +414,11 @@ int main()
         fenetre.draw(cadre2);
         fenetre.draw(recette2);
         fenetre.draw(tube);
-        sleep( milliseconds(25));
+        fenetre.draw(texte);
+        sleep( milliseconds(TEMPO));
         fenetre.display();
         //    printf("indice aliment tombé %i\n", indiceAliment);
-    }
 
+    }
     return EXIT_SUCCESS;
 }
-
