@@ -45,6 +45,7 @@ typedef struct
 typedef struct
 {
     Point tube;
+    Point aliment;
     Point recette1;
     Point recette2;
     Point cadre;
@@ -74,7 +75,7 @@ int main()
     int burger[3];
     int maxiDeluxeEdition[7]; //SI on ajoute les sauces
     int vege[4];
-    int ordreAliment 0;;
+    int ordreAliment = 0;
     srand(time(NULL));
     int mvt = 0;
     int mvtY =0;
