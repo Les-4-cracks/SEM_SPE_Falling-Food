@@ -19,6 +19,9 @@
 					<Add library="sfml-window-s-d" />
 					<Add library="sfml-system-s-d" />
 					<Add library="sfml-main-d" />
+					<Add library="gdi32" />
+					<Add library="opengl32" />
+					<Add library="winmm" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -35,6 +38,9 @@
 					<Add library="sfml-window-s" />
 					<Add library="sfml-system-s" />
 					<Add library="sfml-main" />
+					<Add library="winmm" />
+					<Add library="opengl32" />
+					<Add library="gdi32" />
 				</Linker>
 			</Target>
 		</Build>
@@ -53,9 +59,10 @@
 		</Linker>
 		<Unit filename="FonctionAlice.cpp" />
 		<Unit filename="FonctionAlice.h" />
+		<Unit filename="FonctionsTimo.cpp" />
+		<Unit filename="FonctionsTimo.hpp" />
 		<Unit filename="cb.bmp" />
 		<Unit filename="fonctionAnais.cpp" />
-		<Unit filename="fonctionanais (2).h" />
 		<Unit filename="fonctionanais.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
