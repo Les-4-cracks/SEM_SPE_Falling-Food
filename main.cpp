@@ -6,44 +6,44 @@
 
 #define FENETREHAUTEUR 750
 #define FENETRELARGEUR 1200
-#define ASS1_XMIN 372
+
+#define ASS1_XMIN 372//ASS = assiette
 #define ASS1_XMAX 536
 #define ASS2_XMIN 641
 #define ASS2_XMAX 805
-#define ASS_YMIN 611
+#define ASS_YMIN 580
 #define ASS_YMAX 659
+
 #define TROU_YMIN 607
 #define TROU_YMAX 662
 #define TROU_XMIN 72
 #define TROU_XMAX 260
+
 #define LARGEUR_TUBE 133
 #define HAUTEUR_TUBE 228
+
 #define PAS 20
+
 #define NBALIMENTS 5
 #define TAILLE_EMPILEMENT 20
-#define TEMPO 25
-#define BOUTON1_XMIN 434
+
+#define TEMPO 20 //pour convertir en secondes et permet de ralentir la fenetre
+#define TEMPS 60 //secondes
+
+#define BOUTON1_XMIN 434 //Boutons pour vider l'assiette
 #define BOUTON1_XMAX 474
 #define BOUTON2_XMIN 703
 #define BOUTON2_XMAX 743
 #define BOUTON_YMIN 680
 #define BOUTON_YMAX 720
-#define TEMPS 50
-
-
 
 using namespace sf;
 
-void afficheRecettes(char recette[]);
-
-void empilerAliment(int assiettes[]);
-//void decor();
-int deplacementTubeDroit(int posTubeX,Sprite tube);
-void deplacementTubeGauche(int posTubeX);
-void chuteAliments(char alimentsVisibles [] );
-int timer(int seconde);
-
-int recettesValidees(int recette[], int assiette[]);
+typedef struct
+{
+    int recette1;
+    int recette2;
+} Recette;
 
 
 Deco deco;
@@ -53,33 +53,26 @@ int main()
 
     RenderWindow fenetre(VideoMode(FENETRELARGEUR, FENETREHAUTEUR), "Falling Food");
     //fenetre.setFramerateLimit(0);
-    menu(fenetre);
-    int test=0;
+    menu(fenetre); //lance la fonction menu (qui affiche le menu principal)
+    Recette r;
     Point p;
-    deco.tube.x = 520;
-    deco.tube.y = 0;
-    int alimentsVisibles[3];
+    deco.tube.x = 520; // Position du tube en x
+    deco.tube.y = 0; // Position du tube en y
     int i;
-    char alimentsTexture [20];
-    int coorXtube;
-    int assiettes1[10];
-    int assiettes2[10];
-    int cheeseburger[6];
-    int burger[3];
-    int maxiDeluxeEdition[7]; //SI on ajoute les sauces
-    int vege[4];
-    int ordreAliment = 0;
+    int assiettes1[10]; // Tableaux des numéros correspondants a un aliment (0 = tomate / 1 = steak / etc) dans l'assiette de gauche
+    int assiettes2[10]; // Tableaux des numéros correspondants a un aliment (0 = tomate / 1 = steak / etc) dans l'assiette de droite
+    int cheeseburger[]= {2,1,2,3,4}; //tableau de la recette cheeseburger, chaque chiffre correspond à un ingrédient
+    int burgerClassique[]= {1,2,0,3,4}; //tableau de la recette burgerClassique, chaque chiffre correspond à un ingrédient
+    int ordreAliment = 0; // sert à receptionner la fonction aléatoire
     srand(time(NULL));
     int mvtX = 0; //mouvement tube/aliments en x
     int mvtY = 0; //mouvement aliments en y
-    int position = 1;
-    int aleaMax;
+    int position = 1; // initialise la position du tube
     int vider = 0;
-    aleaMax = NBALIMENTS;
     deco.recette2.x = 1050; //pos recette1
     deco.recette2.y = 50; //pos recette1
-    deco.cadre.x = 121;  //taille cadre
-    deco.cadre.y = 129;  //taille cadre
+    deco.cadre.x = 120;  //taille cadre
+    deco.cadre.y = 120;  //taille cadre
 
     deco.recette1.x = 900; //pos recette2
     deco.recette1.y = 50; //pos recette2
@@ -95,7 +88,6 @@ int main()
         assiettes2[i]=-1;
     }
 
-    int tempsImparti;
     int seconde;
     seconde = TEMPS;
     int compteur;
@@ -108,9 +100,9 @@ int main()
     Text texte;
     texte.setFont(font);
 
-
+//appliquer des textures
     Texture texture;
-    if (!texture.loadFromFile("image/exempleDecor.png"))
+    if (!texture.loadFromFile("image/decor.png"))
         return EXIT_FAILURE;
     Sprite decor(texture);
 
@@ -137,22 +129,32 @@ int main()
 
     Texture aliment4Image;//pain
     aliment4Image.loadFromFile("image/aliments/4.png");
-    printf("%i",ordreAliment);
 
-    Texture vide;
+    Texture vide;//permet de faire disparaitre les aliments
     vide.loadFromFile("image/aliments/-1.png");
 
     Texture recette1Image;//recette1
-    if (!recette1Image.loadFromFile("image/menu1.png"))
+    if (!recette1Image.loadFromFile("image/recette/burgerClassic.png"))
         return EXIT_FAILURE;
     Sprite recette1(recette1Image);
     recette1.setPosition(deco.recette1.x,deco.recette1.y);
 
     Texture recette2Image;//recette2
-    if (!recette2Image.loadFromFile("image/menu1.png"))
+    if (!recette2Image.loadFromFile("image/recette/cheeseburger.png"))
         return EXIT_FAILURE;
     Sprite recette2(recette2Image);
     recette2.setPosition(deco.recette2.x,deco.recette2.y);
+
+    Texture recette1ImageV;//recette1
+    if (!recette1ImageV.loadFromFile("image/recette/burgerClassicV.png"))
+        return EXIT_FAILURE;
+
+    Texture recette2ImageV;//recette2
+    if (!recette2ImageV.loadFromFile("image/recette/cheeseburgerV.png"))
+        return EXIT_FAILURE;
+
+
+
 
 
 
@@ -169,21 +171,43 @@ int main()
 
     while (fenetre.isOpen())
     {
+        //calcul du timer
         compteur ++;
         if (compteur ==1000/TEMPO)
         {
-            printf("seconde :%i\n", seconde);
             seconde --;
             compteur =1;
-            if(seconde <0)
+            if(seconde <0)//si le compte à rebours arrive à 0
             {
-                break;
+                for (i=0; i<10; i++)//les for permettent de vider les deux assiettes
+                {
+                    assiettes1[i]=-1;
+                }
+                for (int j=0; j < 10; j++)
+                {
+                    alimentsAssiette[1][j].setTexture(vide);;
+                }
+                for (i=0; i<10; i++)
+                {
+                    assiettes2[i]=-1;
+                }
+                for (int j=0; j < 10; j++)
+                {
+                    alimentsAssiette[2][j].setTexture(vide);;
+                }
+
+                recette1.setTexture(recette1Image);
+                recette2.setTexture(recette2Image);
+
+
+                perdu(fenetre);//on utilise la fonction perdu
+                seconde = TEMPS;//on remet le temps à 0
             }
         }
         if (genererAliment)
         {
             ordreAliment = alea(NBALIMENTS);
-
+            //affecte des chiffres aux aliments
             switch (ordreAliment)
             {
             case 0:
@@ -207,10 +231,12 @@ int main()
             deco.aliment.y = HAUTEUR_TUBE - 43;
 
         }
+        //affiche le timer
         sprintf(chaineTimer, "%i",seconde);
         texte.setString(chaineTimer);
         texte.setCharacterSize(50);
         texte.setColor(Color::Black);
+        texte.setPosition(8,25);
         texte.setStyle(Text::Bold);
 
         Event event;
@@ -238,12 +264,10 @@ int main()
                     bouton2 = (deco.souris.x<=BOUTON2_XMAX && deco.souris.x>=BOUTON2_XMIN && deco.souris.y<=BOUTON_YMAX && deco.souris.y>=BOUTON_YMIN);  //si cliquer sur le bouton pour vider assiette droite
                     if (bouton1)
                     {
-                        printf("B1");
                         vider = 1;
                     }
                     if (bouton2)
                     {
-                        printf("B2");
                         vider = 2;
                     }
                     if ( assietteDroite)
@@ -350,6 +374,54 @@ int main()
         }
 
         deco.tube.x = deco.tube.x + PAS * mvtX; // deplacement tube
+
+
+        int tailleburgerClassique = *(&burgerClassique+1)-burgerClassique; //calcule la longueur du tableau "burgerClassique []"
+        int taillecheeseburger = *(&cheeseburger+1)-cheeseburger; //calcule la longueur du tableau "cheeseburger []"
+
+        r.recette1 = recettesValidees(burgerClassique, assiettes1, tailleburgerClassique); //retourne 1 si recette validée, 0 si non validée
+        r.recette2 = recettesValidees(cheeseburger, assiettes2, taillecheeseburger);
+
+        //met les textures validées lorsqu'une recette est prete
+        if (r.recette1 == 1)
+            {
+                recette1.setTexture(recette1ImageV);
+            }
+
+        if (r.recette2 == 1)
+            {
+                recette2.setTexture(recette2ImageV);
+            }
+
+
+        if (r.recette1 == 1 && r.recette2 == 1)//si les deux recettes sont validées
+            {
+
+                for (i=0; i<10; i++)//les for permettent de vider les deux assiettes
+                {
+                    assiettes1[i]=-1;
+                }
+                for (int j=0; j < 10; j++)
+                {
+                    alimentsAssiette[1][j].setTexture(vide);;
+                }
+                for (i=0; i<10; i++)
+                {
+                    assiettes2[i]=-1;
+                }
+                for (int j=0; j < 10; j++)
+                {
+                    alimentsAssiette[2][j].setTexture(vide);;
+                }
+
+                recette1.setTexture(recette1Image);
+                recette2.setTexture(recette2Image);
+
+                gagne(fenetre);//on utilise la fonction perdu
+                seconde = TEMPS;//on remet le temps à 0
+            }
+
+
         fenetre.clear();
         if (vider == 1)
         {
@@ -359,11 +431,10 @@ int main()
             }
 
 
-                for (int j=0; j < 10; j++)
-                {
-                    alimentsAssiette[1][j].setTexture(vide);;
-                    //printf("i: %i, j: %i, x: %f, y: %f\n", i, j, alimentsAssiette[i][j].getPosition().x, alimentsAssiette[i][j].getPosition().y);
-                }
+            for (int j=0; j < 10; j++)
+            {
+                alimentsAssiette[1][j].setTexture(vide);;
+            }
 
         }
         if (vider == 2)
@@ -374,11 +445,10 @@ int main()
             }
 
 
-                for (int j=0; j < 10; j++)
-                {
-                    alimentsAssiette[2][j].setTexture(vide);;
-                    //printf("i: %i, j: %i, x: %f, y: %f\n", i, j, alimentsAssiette[i][j].getPosition().x, alimentsAssiette[i][j].getPosition().y);
-                }
+            for (int j=0; j < 10; j++)
+            {
+                alimentsAssiette[2][j].setTexture(vide);;
+            }
 
         }
         vider = 0;
@@ -395,7 +465,7 @@ int main()
             for (int j=0; j < 10; j++)
             {
                 fenetre.draw(alimentsAssiette[i][j]);
-                //printf("i: %i, j: %i, x: %f, y: %f\n", i, j, alimentsAssiette[i][j].getPosition().x, alimentsAssiette[i][j].getPosition().y);
+
             }
         }
         fenetre.draw(tube);
@@ -404,10 +474,10 @@ int main()
         fenetre.draw(cadre2);
         fenetre.draw(recette2);
         fenetre.draw(tube);
-        fenetre.draw(texte);
+        fenetre.draw(texte);//dessine timer
         sleep( milliseconds(TEMPO));
         fenetre.display();
-        //    printf("indice aliment tombé %i\n", indiceAliment);
+
 
     }
     return EXIT_SUCCESS;

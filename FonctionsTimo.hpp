@@ -24,6 +24,8 @@ typedef struct
 void menu(RenderWindow &fenetre);
 void options(RenderWindow &fenetre);
 void regles(RenderWindow &fenetre);
-
+void perdu(RenderWindow &fenetre);
+void gagne(RenderWindow &fenetre);
+int recettesValidees(int recette[], int assiette[], int tailleRecette);
 
 #endif // FONCTIONSTIMO_HPP_INCLUDED
