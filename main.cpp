@@ -14,7 +14,7 @@
 #define ASS_YMIN 580
 #define ASS_YMAX 659
 
-#define TROU_YMIN 607
+#define TROU_YMIN 607 //trou = poubelle
 #define TROU_YMAX 662
 #define TROU_XMIN 72
 #define TROU_XMAX 260
@@ -171,7 +171,9 @@ int main()
 
     while (fenetre.isOpen())
     {
-        //calcul du timer
+/*====================================
+                TIMER
+====================================*/
         compteur ++;
         if (compteur ==1000/TEMPO)
         {
@@ -254,7 +256,7 @@ int main()
 
             if (event.type == Event::MouseButtonPressed)
             {
-                if (event.mouseButton.button == Mouse::Left &&deplacementAliment == false)
+                if (event.mouseButton.button == Mouse::Left &&deplacementAliment == false) // l'action n'est prise en compte que si aucun aliment bouge
                 {
                     bool assietteDroite, assietteGauche, poubelle;
                     assietteDroite = (deco.souris.x<=ASS2_XMAX && deco.souris.x>= ASS2_XMIN && deco.souris.y<=ASS_YMAX && deco.souris.y>=ASS_YMIN); //si cliquer dans assiette droite
@@ -293,6 +295,7 @@ int main()
                         mvtX = -1;  // avance a gauche
                         indiceAliment = 0; // On force la position à 0 pour la poubelle, car on ne garde aucun aliment
                     }
+                    //On affecte au tableau correspondant le nouvel aliment ajouté
                     if (assietteDroite || assietteGauche || poubelle)
                     {
                         deplacementAliment = true;
@@ -317,7 +320,7 @@ int main()
                                 }
                             }
                         }
-
+                        // On affiche le nouveau sprite aliment dans le tube
                         switch (ordreAliment)
                         {
                         case 0:
@@ -336,7 +339,7 @@ int main()
                             alimentsAssiette[position-1][indiceAliment].setTexture(aliment4Image);
                             break;
                         }
-                        alimentsAssiette[position-1][indiceAliment].setPosition(deco.tube.x + 12, HAUTEUR_TUBE - 43);
+                        alimentsAssiette[position-1][indiceAliment].setPosition(deco.tube.x + 12, HAUTEUR_TUBE - 43); // On initialise la position du nouveau sprite d'aliment dans le tube
                     }
                 }
             }
@@ -359,15 +362,16 @@ int main()
         if(mvtX == 0 && deplacementAliment == true)
         {
             mvtY = 1;
-            if (alimentsAssiette[position-1][indiceAliment].getPosition().y > 600 - indiceAliment * TAILLE_EMPILEMENT)
+            if (alimentsAssiette[position-1][indiceAliment].getPosition().y > 600 - indiceAliment * TAILLE_EMPILEMENT) //On arrete la descente de l'aliment en fonction de sa position dans le tableau
             {
                 mvtY = 0;
                 deplacementAliment = false;
                 afficheAlimentTube = true;
                 genererAliment = true;
+                //Cliquer sur l'assiette :
                 if(position == 1)
                 {
-                    alimentsAssiette[position-1][indiceAliment].setTexture(vide);
+                    alimentsAssiette[position-1][indiceAliment].setTexture(vide); // On remplace l'aliment tombé dans la poubelle recyclable par un sprite vide
 
                 }
             }
@@ -423,7 +427,9 @@ int main()
 
 
         fenetre.clear();
-        if (vider == 1)
+        // On remplace chaque aliment du tableau par -1 (qui ne correspond à aucun aliment)
+        // On remplace chaque sprite par un sprite vide pour suprimer les aliments dans l'assiette
+        if (vider == 1)// pour assiette de gauche
         {
             for (i=0; i<10; i++)
             {
@@ -437,7 +443,7 @@ int main()
             }
 
         }
-        if (vider == 2)
+        if (vider == 2)// pour assiette de droite
         {
             for (i=0; i<10; i++)
             {
@@ -452,7 +458,7 @@ int main()
 
         }
         vider = 0;
-        alimentsAssiette[position-1][indiceAliment].setPosition( deco.tube.x + 12, alimentsAssiette[position - 1][indiceAliment].getPosition().y + PAS * mvtY);
+        alimentsAssiette[position-1][indiceAliment].setPosition( deco.tube.x + 12, alimentsAssiette[position - 1][indiceAliment].getPosition().y + PAS * mvtY); // descente à partir du deuxieme aliment du tube dans l'assiette
         tube.setPosition(deco.tube.x,0);
         fenetre.draw(decor);
         if (afficheAlimentTube)
@@ -460,6 +466,7 @@ int main()
             alimentTube.setPosition(deco.tube.x+12,deco.aliment.y);
             fenetre.draw(alimentTube);
         }
+        // On affiche chaque aliment dans les assiettes
         for (i=0; i <3; i++)
         {
             for (int j=0; j < 10; j++)
@@ -469,13 +476,13 @@ int main()
             }
         }
         fenetre.draw(tube);
-        fenetre.draw(cadre1);
+        fenetre.draw(cadre1);// dessiner les cadres où son les recettes
         fenetre.draw(recette1);
         fenetre.draw(cadre2);
         fenetre.draw(recette2);
         fenetre.draw(tube);
         fenetre.draw(texte);//dessine timer
-        sleep( milliseconds(TEMPO));
+        sleep( milliseconds(TEMPO)); // régule le temps.
         fenetre.display();
 
 
