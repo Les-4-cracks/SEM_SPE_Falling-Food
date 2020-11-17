@@ -516,3 +516,31 @@
 	"FonctionsTimo.hpp"
 	<windows.h>
 
+1605533876 source:c:\users\timo\documents\semainesfml\fonctionalice.cpp
+	<SFML/Graphics.hpp>
+	"FonctionAlice.h"
+	<time.h>
+
+1605533876 c:\users\timo\documents\semainesfml\fonctionalice.h
+
+1605533876 source:c:\users\timo\documents\semainesfml\fonctionanais.cpp
+	"fonctionanais.h"
+	<SFML/Graphics.hpp>
+
+1605533876 c:\users\timo\documents\semainesfml\fonctionanais.h
+
+1605645027 source:c:\users\timo\documents\semainesfml\fonctionstimo.cpp
+	"FonctionsTimo.hpp"
+	<SFML/Graphics.hpp>
+	<stdlib.h>
+
+1605644094 c:\users\timo\documents\semainesfml\fonctionstimo.hpp
+	<SFML/Graphics.hpp>
+
+1605627550 source:c:\users\timo\documents\semainesfml\main.cpp
+	<SFML/Graphics.hpp>
+	"fonctionanais.h"
+	"FonctionAlice.h"
+	"FonctionsTimo.hpp"
+	<windows.h>
+
