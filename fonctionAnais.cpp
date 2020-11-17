@@ -16,25 +16,40 @@
 
 using namespace sf;
 
-int deplacementTubeDroit(int posTubeX,Sprite tube)
+/*void videAssiette (RenderWindow &fenetre, int assiettes1[], int assiettes2[])
 {
+    int i;
+    bool bouton1,bouton2;
 
-    while(posTubeX<ASS2_XMIN )
+    if  (event.type == Event::MouseMoved)
     {
-        posTubeX = posTubeX + PAS;
-        tube.setPosition(posTubeX,0);
-        return posTubeX;
+        deco.souris.x=event.mouseMove.x;
+        deco.souris.y=event.mouseMove.y;
+        bouton1 = (deco.souris.x<=BOUTON1_XMAX && deco.souris.x<=BOUTON1_XMIN && deco.souris.y<=BOUTON_YMAX && deco.souris.y<=BOUTON_YMIN);
+        bouton2 = (deco.souris.x<=BOUTON2_XMAX && deco.souris.x<=BOUTON2_XMIN && deco.souris.y<=BOUTON_YMAX && deco.souris.y<=BOUTON_YMIN);
 
+        if (event.type == Event::MouseButtonPressed)
+        {
+            if (event.mouseButton.button == Mouse::Left )
+            {
+                if (bouton1)
+                {
+                    for(i=0; i<10; i++)
+                    {
+                        assiettes1[i]=-1;
+                    }
+                }
+                if (bouton2)
+                {
+                    for(i=0; i<10; i++)
+                    {
+                        assiettes2[i]=-1;
+                    }
+                }
+            }
+        }
     }
-    while(posTubeX+LARGEUR_TUBE>ASS2_XMIN)
-    {
-        posTubeX = posTubeX - PAS;
-        tube.setPosition(posTubeX,0);
-        return posTubeX;
-    }
+    fenetre.clear();
+    fenetre.display();
 
-}
-void deplacementTubeGauche(int posTubeX)
-{
-
-}
+}*/
